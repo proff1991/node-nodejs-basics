@@ -1,7 +1,13 @@
-const path = require('path');
-const { release, version } = require('os');
-const { createServer: createServerHttp } = require('http');
-require('./files/c');
+import path from 'path';
+import { release, version } from 'os';
+import { createServer as createServerHttp } from 'http';
+import { createRequire } from "module";
+import { fileURLToPath } from 'node:url';
+const require = createRequire(import.meta.url);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+import './files/c.js';
 
 const random = Math.random();
 
@@ -21,7 +27,7 @@ console.log(`Path to current file is ${__filename}`);
 console.log(`Path to current directory is ${__dirname}`);
 
 const myServer = createServerHttp((_, res) => {
-    res.end('Request accepted');
+    res.end('Request accepted')
 });
 
 const PORT = 3000;
@@ -33,8 +39,7 @@ myServer.listen(PORT, () => {
     console.log('To terminate it, use Ctrl+C combination');
 });
 
-module.exports = {
+export {
     unknownObject,
     myServer,
-};
-
+}
